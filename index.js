@@ -1,4 +1,8 @@
 const loginBtn = document.getElementById("loginBtn");
+const allBtn = document.getElementById("allBtn");
+const openBtn = document.getElementById("openBtn");
+const closedBtn = document.getElementById("closedBtn");
+
 loginBtn.addEventListener("click", () => {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
