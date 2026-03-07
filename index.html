@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- daisyUI + Tailwind -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body
+    class="bg-[#F8FAFC] flex items-center justify-center content-center h-screen geist"
+  >
+    <div
+      class="max-w-[520px] mx-auto border border-white py-8 flex flex-col justify-center items-center space-y-4"
+    >
+      <img class="" src="assets/github-logo.png" alt="github-logo" />
+      <div class="text-center">
+        <h1 class="font-semibold text-2xl text-[#1F2937]">
+          GitHub Issues Tracker
+        </h1>
+        <p class="text-[#64748B]">Sign in to manage your issues</p>
+      </div>
+      <div>
+        <fieldset
+          class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
+        >
+          <legend class="fieldset-legend">Login</legend>
+
+          <label class="label">Email</label>
+          <input type="email" class="input" placeholder="Email" />
+
+          <label class="label">Password</label>
+          <input type="password" class="input" placeholder="Password" />
+
+          <button class="btn btn-neutral mt-4">Login</button>
+        </fieldset>
+      </div>
+    </div>
+  </body>
+</html>
