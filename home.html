@@ -25,16 +25,25 @@
       href="assets/github-logo.png"
       type="image/x-icon"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <title>Github Issues Tracker</title>
   </head>
   <body class="bg-[#F8FAFC]">
     <header class="bg-white border-b border-[#E9E9E9]">
-      <div class="navbar bg-base-100 shadow-sm p-4 sm:px-14">
+      <div class="navbar bg-base-100 shadow-sm p-4 md:px-14">
         <div class="flex-1">
           <a class="btn btn-ghost text-xl">
             <img class="w-9" src="assets/github-logo.png" alt="" />
-            <h1 class="hidden sm:flex text-2xl font-semibold">
+            <h1
+              class="hidden sm:flex text-lg md:text-2xl whitespace-nowrap font-semibold"
+            >
               Github Issues Tracker
             </h1></a
           >
@@ -65,15 +74,17 @@
     </header>
     <section class="py-15 w-11/12 mx-auto space-y-4">
       <div id="" class="bg-white p-6 rounded-lg flex gap-2">
-        <button id="allBtn" class="btn btn-primary w-30">All</button>
-        <button id="openBtn" class="btn btn-primary w-30">Open</button>
-        <button id="closedBtn" class="btn btn-primary w-30">Closed</button>
+        <button id="allBtn" class="btn btn-primary w-26 sm:w-30">All</button>
+        <button id="openBtn" class="btn btn-primary w-26 sm:w-30">Open</button>
+        <button id="closedBtn" class="btn btn-primary w-26 sm:w-30">
+          Closed
+        </button>
       </div>
       <div class="bg-white rounded-lg">
         <div class="flex p-6 justify-between items-center">
           <div class="flex gap-3">
             <div
-              class="bg-[#4800ff21] w-[50px] rounded-full flex items-center justify-center"
+              class="bg-[#4800ff21] w-[60px] sm:w-[50px] rounded-full flex items-center justify-center"
             >
               <img
                 class="flex justify-center items-center"
@@ -83,7 +94,9 @@
             </div>
             <div class="">
               <h1 class="text-xl font-semibold">50 Issues</h1>
-              <p class="text-[#64748B] whitespace-nowrap">
+              <p
+                class="text-[#64748B] text-xs sm:text-[16px] sm:whitespace-nowrap"
+              >
                 Track and manage your project issues
               </p>
             </div>
@@ -104,6 +117,12 @@
           </div>
         </div>
       </div>
+      <div
+        id="cardContainer"
+        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+      ></div>
     </section>
+
+    <script src="index.js"></script>
   </body>
 </html>
