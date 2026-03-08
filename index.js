@@ -58,7 +58,18 @@ const createElements = (arr) => {
   return htmlElements.join(" ");
 };
 
+const manageSpinner = (status) => {
+  if (status == true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("cardContainer").classList.add("hidden");
+  } else {
+    document.getElementById("cardContainer").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("hidden");
+  }
+};
+
 async function loadIssues() {
+  manageSpinner(true);
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
   const res = await fetch(url);
   const data = await res.json();
@@ -145,6 +156,7 @@ const displayIssues = (issues) => {
           </div>
         </div>
     `;
+    manageSpinner(false);
     cardContainer.appendChild(card);
   });
 };
@@ -157,6 +169,7 @@ const loadIssueDetails = async (id) => {
 };
 
 async function openIssueModal(id) {
+  manageSpinner(true);
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
   const details = await res.json();
@@ -187,6 +200,7 @@ async function openIssueModal(id) {
         ? "bg-[#F59E0B]"
         : "bg-[#9CA3AF]",
   );
+  manageSpinner(false);
   issueModal.showModal();
 }
 
@@ -195,6 +209,7 @@ searchBtn.addEventListener("click", async () => {
   const searchValue = searchInput.value.trim().toLowerCase();
 
   try {
+    manageSpinner(true);
     const res = await fetch(
       `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
     );
@@ -203,6 +218,7 @@ searchBtn.addEventListener("click", async () => {
     const issues = data.data;
     displayIssues(issues);
     displayCount(issues);
+    manageSpinner(false);
     btns.forEach((btn) => {
       btn.classList.add("btn-outline");
       btn.classList.remove("btn-primary");
