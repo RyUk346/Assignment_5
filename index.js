@@ -208,24 +208,32 @@ searchBtn.addEventListener("click", async () => {
   const searchInput = document.getElementById("searchInput");
   const searchValue = searchInput.value.trim().toLowerCase();
 
-  try {
-    manageSpinner(true);
-    const res = await fetch(
-      `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
-    );
-    const data = await res.json();
+  manageSpinner(true);
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
+  );
+  const data = await res.json();
 
-    const issues = data.data;
+  const issues = data.data;
+
+  if (issues.length === 0) {
+    cardContainer.classList.remove("grid");
+    cardContainer.innerHTML = `
+            <div class="grid grid-cols-1 text-center">
+                <p class="text-[#64748B] font-semibold text-2xl mt-12 text-center ">No Issues Found</p>
+            </div>
+        `;
+    displayCount(issues);
+  } else {
     displayIssues(issues);
     displayCount(issues);
-    manageSpinner(false);
-    btns.forEach((btn) => {
-      btn.classList.add("btn-outline");
-      btn.classList.remove("btn-primary");
-    });
-  } catch (err) {
-    console.error("Nothing found", err);
   }
+
+  manageSpinner(false);
+  btns.forEach((btn) => {
+    btn.classList.add("btn-outline");
+    btn.classList.remove("btn-primary");
+  });
 });
 
 const displayCount = (issues) => {
