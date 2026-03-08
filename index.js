@@ -12,6 +12,8 @@ const description = document.getElementById("description");
 const assignee = document.getElementById("assignee");
 const priority = document.getElementById("priority");
 const author = document.getElementById("author");
+const date = document.getElementById("date");
+const searchBtn = document.getElementById("searchBtn");
 
 let allIssues = [];
 console.log(btns);
@@ -139,7 +141,7 @@ const displayIssues = (issues) => {
           </div>
           <div class="text-[#64748B] text-xs p-4 border-t border-[#E4E4E7]">
             <h1>${issue.author}</h1>
-            <h1>${issue.updatedAt}</h1>
+            <h1>${issue.updatedAt.slice(0, 10)}</h1>
           </div>
         </div>
     `;
@@ -172,6 +174,10 @@ async function openIssueModal(id) {
   description.textContent = issueDetails.description;
   assignee.textContent = issueDetails.assignee;
   author.textContent = issueDetails.author;
+  //   date.textContent = issueDetails.createdAt.toLocaleDateString("en-GB");
+  date.textContent = new Date(issueDetails.createdAt).toLocaleDateString(
+    "en-GB",
+  );
   priority.textContent = issueDetails.priority.toUpperCase();
   priority.classList.remove("bg-[#EF4444]", "bg-[#F59E0B]", "bg-[#9CA3AF]");
   priority.classList.add(
@@ -183,6 +189,28 @@ async function openIssueModal(id) {
   );
   issueModal.showModal();
 }
+
+searchBtn.addEventListener("click", async () => {
+  const searchInput = document.getElementById("searchInput");
+  const searchValue = searchInput.value.trim().toLowerCase();
+
+  try {
+    const res = await fetch(
+      `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
+    );
+    const data = await res.json();
+
+    const issues = data.data;
+    displayIssues(issues);
+    displayCount(issues);
+    btns.forEach((btn) => {
+      btn.classList.add("btn-outline");
+      btn.classList.remove("btn-primary");
+    });
+  } catch (err) {
+    console.error("Nothing found", err);
+  }
+});
 
 const displayCount = (issues) => {
   totalCount.innerHTML = `
