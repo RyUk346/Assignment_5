@@ -4,6 +4,15 @@ const closedBtn = document.getElementById("closedBtn");
 const cardContainer = document.getElementById("cardContainer");
 const totalCount = document.getElementById("totalCount");
 const btns = document.querySelectorAll("#btnDiv button");
+const issueModal = document.getElementById("issueModal");
+const title = document.getElementById("title");
+const status = document.getElementById("status");
+const label = document.getElementById("labels");
+const description = document.getElementById("description");
+const assignee = document.getElementById("assignee");
+const priority = document.getElementById("priority");
+const author = document.getElementById("author");
+
 let allIssues = [];
 console.log(btns);
 
@@ -103,7 +112,7 @@ const displayIssues = (issues) => {
     const card = document.createElement("div");
     card.className = `bg-white rounded-lg shadow-sm border-t-3 ${issue.status === "open" ? "border-[#00A96E]" : "border-[#A855F7]"}`;
     card.innerHTML = `
-        <div class="">
+        <div onclick="openIssueModal(${issue.id})" class="">
           <div class="space-y-3 p-4">
             <div class="flex justify-between">
               <img src="assets/Open-Status.png" alt="" />
@@ -138,7 +147,44 @@ const displayIssues = (issues) => {
   });
 };
 loadIssues();
-displayCount = (issues) => {
+const loadIssueDetails = async (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  console.log(details);
+};
+
+async function openIssueModal(id) {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  const issueDetails = details.data;
+  title.textContent = issueDetails.title;
+  status.textContent = issueDetails.status === "open" ? "Opened" : "Closed";
+  status.style.backgroundColor =
+    issueDetails.status === "open" ? "#00A96E" : "#A855F7";
+
+  label.innerHTML = `<div
+                class="flex gap-2 flex-wrap"
+              >
+                ${createElements(issueDetails.labels)}
+                </div>`;
+  description.textContent = issueDetails.description;
+  assignee.textContent = issueDetails.assignee;
+  author.textContent = issueDetails.author;
+  priority.textContent = issueDetails.priority.toUpperCase();
+  priority.classList.remove("bg-[#EF4444]", "bg-[#F59E0B]", "bg-[#9CA3AF]");
+  priority.classList.add(
+    issueDetails.priority === "high"
+      ? "bg-[#EF4444]"
+      : issueDetails.priority === "medium"
+        ? "bg-[#F59E0B]"
+        : "bg-[#9CA3AF]",
+  );
+  issueModal.showModal();
+}
+
+const displayCount = (issues) => {
   totalCount.innerHTML = `
         <h1 class="text-xl font-semibold">${issues.length} Issues</h1>
   `;
